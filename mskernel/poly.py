@@ -50,6 +50,7 @@ def psi_inf(A,b,eta, mu, cov, z):
               "scale":scale,
               }
 
+    '''
         # Weird numerical instability.
     return lambda x: 1-truncnorm.cdf(x,
                         l_thres/scale,
@@ -62,7 +63,6 @@ def psi_inf(A,b,eta, mu, cov, z):
                         u_thres,
                         loc=np.matmul(eta,mu),
                         scale=scale), params
-    '''
 
 def calculate_threshold(z, A, b, eta, cov):
     """

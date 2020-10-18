@@ -17,7 +17,6 @@ from mskernel import mmd
 from mskernel import kernel
 from mskernel import util
 from mskernel.featsel import MultiSel, PolySel
-from mskernel.stest import MMD2Sample, Inter2Sample
 
 ### Problems
 from problem import *
@@ -78,8 +77,6 @@ def runExperiments(problem, n_select, n_samples, algorithm, dist, n_repeats, thr
         algsel = MultiSel
     elif algorithm == 'PolySel':
         algsel = PolySel
-    elif algorithm == 'MMD':
-        algsel = MMD2Sample
     else:
         assert(0==1)
 
