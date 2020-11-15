@@ -33,6 +33,7 @@ def select(x, scaling, index, k):
     isin = np.apply_along_axis(lambda x: np.isin(x, index), 1, sel_vars)
     return np.sum(isin)/x.shape[0]
 
+# +
 class MultiSel(FeatureSelection):
     def __init__(self, dist, params=True):
         """
@@ -42,7 +43,13 @@ class MultiSel(FeatureSelection):
         self.linear_model = params
 
     def test(self, X, Y, args=None, alpha=0.05, seed=5, plot=False):
-        n_select = args
+        if args == None:
+            print("Number of selecting variables not specified. Defaulting to the max number.")
+            n_select = X.shape[1]
+        else:
+            n_select = args
+        print(f"Testing with significance level {alpha} selecting {n_select}")
+        
         n_samples = X.shape[0]
         n_dim = X.shape[1]
 
@@ -75,13 +82,13 @@ class MultiSel(FeatureSelection):
                     stat=stat[index])
             pvals.append(pval) 
 
-        rej = np.any(bh(pvals, alpha))
+#         rej = np.any(bh(pvals, alpha))
         pvals = np.array(pvals)
         results ={ 
                 'sel_vars': sel_vars,
                 'h0_rejs': pvals < alpha,
                 'pvals': pvals,
-                'rej': rej,
+#                 'rej': rej,
                 }
         return results
 
@@ -91,6 +98,8 @@ class MultiSel(FeatureSelection):
     def __str__(self):
         return "MultiscaleSelection"
 
+
+# -
 
 class PolySel(FeatureSelection):
     def __init__(self, dist, params=None):
